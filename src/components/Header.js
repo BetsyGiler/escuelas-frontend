@@ -40,7 +40,7 @@ class Header extends React.Component{
         return (
             <header className="flex flex-row justify-between items-center bg-custom-color-2 p-4 text-white">
                 <Link to="/">
-                    <h1 className="text-2xl font-semibold">App de educación</h1>
+                    <h1 className="text-2xl font-semibold"><i className="fab fa-uncharted px-2"></i> Symmetry</h1>
                 </Link>
                 {
                     this.mostrarLogin()

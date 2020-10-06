@@ -10,9 +10,9 @@ const SideBar = props => {
             icono: <i className="fas fa-vector-square"></i>
         },
         {
-            nombre: 'Paralelos',
-            url: 'paralelos',
-            icono: <i className="fas fa-puzzle-piece"></i>
+            nombre: 'Estudiantes',
+            url: 'estudiantes',
+            icono: <i className="fas fa-school"></i>
         }
     ]
 
