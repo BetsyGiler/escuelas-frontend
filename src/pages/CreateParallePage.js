@@ -1,10 +1,15 @@
 import React from 'react';
 
-class CreateCourse extends React.Component{
+class CreateParallelPage extends React.Component{
 
     state = {
         form: {
-            name: ''
+            periodo: '',
+            letter: '',
+            level: '',
+            course_id: this.props.match.params.id,
+            professor_id: '',
+            students: []
         },
         cargando: false,
         error: ''
@@ -20,29 +25,9 @@ class CreateCourse extends React.Component{
         })
     }
 
-    /*handleParallels = (e) => {
-
-        const A_VALUE = 65;
-
-        let paralelos = [];
-
-        for(let i=A_VALUE; i < A_VALUE + parseInt(e.target.value) ; i++){
-            paralelos.push({'paralelo': String.fromCharCode(i)})
-        }
-
-        this.setState({
-            form: {
-                ...this.state.form,
-                parallels : paralelos
-            }
-        })
-    }*/
-
     handleSubmit = async e => {
 
         e.preventDefault()
-
-        console.log(this.state.form.parallels)
 
         try{
 
@@ -51,8 +36,9 @@ class CreateCourse extends React.Component{
             })
 
             console.log('formulario', this.state.form)
+            console.log(`${process.env.REACT_APP_BACKEND}/courses/${this.props.match.params.id}/parallels`)
 
-            const response = await fetch(`${process.env.REACT_APP_BACKEND}/courses`, {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND}/courses/${this.props.match.params.id}/parallels`, {
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: localStorage.userToken
@@ -64,8 +50,8 @@ class CreateCourse extends React.Component{
             const data = await response.json();
 
             if(data.success){
-                alert('Se ingresó el curso correctamente.')
-                this.props.history.push('/admin/cursos')
+                alert('Se ingresó el paralelo correctamente.')
+                this.props.history.push(`/admin/cursos/${this.props.match.params.id}`)
             } else {
                 this.setState({ cargando: false, error: 'No se pudo ingresar el curso.'})
                 alert(this.state.error)
@@ -86,10 +72,12 @@ class CreateCourse extends React.Component{
         return (
             <div className="flex-1 flex flex-col justify-center items-center">
                 <form onSubmit={this.handleSubmit} autoComplete="off" className="flex flex-col bg-white p-4 pb-2 w-1/2 text-gray-800">
-                    <h2 className="font-bold text-2xl my-3">Crear curso</h2>
-                    <h3 className="px-2">Agrega un nuevo curso</h3>
-                    <input className="text-gray-900 p-2 my-2 border-b-2 placeholder-gray-600" type="text" name="name" placeholder="Nombre del curso" onChange={this.handleChange} value={this.state.form.name} required/>
-                    {/* <input className="text-gray-900 p-2 my-2 border-b-2 placeholder-gray-600" type="number" name="paralelos" placeholder="Numero de paralelos" onChange={this.handleParallels} min="1" required/> */}
+                    <h2 className="font-bold text-2xl my-3">Crear paralelo</h2>
+                    <h3 className="px-2">Agrega un nuevo paralelo</h3>
+                    <input className="text-gray-900 p-2 my-2 border-b-2 placeholder-gray-600" type="text" name="periodo" placeholder="Periodo" onChange={this.handleChange} value={this.state.form.periodo} required/>
+                    <input className="text-gray-900 p-2 my-2 border-b-2 placeholder-gray-600" type="text" name="letter" placeholder="Letra del paralelo" onChange={this.handleChange} value={this.state.form.letter} required/>
+                    <input className="text-gray-900 p-2 my-2 border-b-2 placeholder-gray-600" type="number" min="1" max="10" name="level" placeholder="Nivel del paralelo" onChange={this.handleChange} value={this.state.form.level} required/>
+                    <input className="text-gray-900 p-2 my-2 border-b-2 placeholder-gray-600" type="text" name="professor_id" placeholder="ID del profesor" onChange={this.handleChange} value={this.state.form.professor_id} required/>
                     <button className="bg-blue-600 text-white font-bold text-xl my-4 p-1 rounded-lg">
                         Registrar
                     </button>
@@ -101,4 +89,4 @@ class CreateCourse extends React.Component{
 
 }
 
-export default CreateCourse;
+export default CreateParallelPage;

@@ -1,12 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Professor from '../components/Professor';
 
-import Course from '../components/Course';
-
-class CoursesPage extends React.Component{
+class ProfessorsPage extends React.Component{
 
     state = {
-        cursos: [],
+        profesores: [],
         cargando: false,
         error: ''
     }
@@ -16,7 +15,7 @@ class CoursesPage extends React.Component{
         this.setState({ cargando : false, error: '' })
         try{
 
-            const response = await fetch(`${process.env.REACT_APP_BACKEND}/courses`,{
+            const response = await fetch(`${process.env.REACT_APP_BACKEND}/user/professors`,{
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: localStorage.userToken
@@ -26,7 +25,7 @@ class CoursesPage extends React.Component{
             const { data } = await response.json();
 
             this.setState({
-                cursos: data,
+                profesores: data,
                 cargando: false
             })
 
@@ -37,41 +36,37 @@ class CoursesPage extends React.Component{
 
     }
 
-    mostrarCursos = () => {
-
-        return this.state.cursos.map( (curso, i) => (
-            <Course key={i} curso={curso} position={i} />
+    mostrarProfesores = () => {
+        
+        return this.state.profesores.map( (profesor, i) => (
+            <Professor key={i} profesor={profesor} position={i} />
         ))
-
     }
-
     render(){
-
         return (
             <div className="flex-1 flex flex-col bg-gray-200">
                 <div className="flex flex-row items-end">
                     <div>
                         <h2 className="my-4 font-bold text-2xl ml-4">
-                            Cursos
+                            Profesores
                         </h2>
                         <h4 className="ml-6 text-gray-700 text-xl">
-                            Aqui hay un listado de cursos
+                            Aqui hay un listado de profesores
                         </h4>
                     </div>
-                    <div className="w-64 flex flex-row justify-center">
-                        <Link to="/admin/curso/nuevo" className="text-white bg-blue-500 hover:bg-blue-400 p-2 rounded-full font-semibold">Crear nuevo curso <i className="fas fa-plus-circle mx-2"></i></Link>
+                    <div className="w-64 ml-4 flex flex-row justify-center">
+                        <Link to="/admin/profesores/nuevo" className="text-white bg-blue-500 hover:bg-blue-400 p-2 rounded-full font-semibold">Registrar nuevo profesor <i className="fas fa-plus-circle mx-2"></i></Link>
                     </div>
                 </div>
                 <div className="flex flex-row flex-wrap mt-4 ml-6">
                     {
-                        this.mostrarCursos()
+                        this.mostrarProfesores()
                     }
                 </div>
             </div>
         )
-
     }
 
 }
 
-export default CoursesPage;
+export default ProfessorsPage;

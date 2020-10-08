@@ -13,6 +13,11 @@ const SideBar = props => {
             nombre: 'Estudiantes',
             url: 'estudiantes',
             icono: <i className="fas fa-school"></i>
+        },
+        {
+            nombre: 'Profesores',
+            url: 'profesores',
+            icono: <i className="fas fa-chalkboard-teacher"></i>
         }
     ]
 

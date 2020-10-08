@@ -2,11 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import Course from '../components/Course';
+import Parallel from '../components/Parallel';
 
-class CoursesPage extends React.Component{
+class CourseDetails extends React.Component{
 
     state = {
-        cursos: [],
+        parallels: [],
         cargando: false,
         error: ''
     }
@@ -16,7 +17,7 @@ class CoursesPage extends React.Component{
         this.setState({ cargando : false, error: '' })
         try{
 
-            const response = await fetch(`${process.env.REACT_APP_BACKEND}/courses`,{
+            const response = await fetch(`${process.env.REACT_APP_BACKEND}/courses/${this.props.match.params.id}/parallels`,{
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: localStorage.userToken
@@ -26,7 +27,7 @@ class CoursesPage extends React.Component{
             const { data } = await response.json();
 
             this.setState({
-                cursos: data,
+                parallels: data,
                 cargando: false
             })
 
@@ -37,11 +38,16 @@ class CoursesPage extends React.Component{
 
     }
 
-    mostrarCursos = () => {
+    mostrarParalelos = () => {
 
-        return this.state.cursos.map( (curso, i) => (
-            <Course key={i} curso={curso} position={i} />
-        ))
+        if (this.state.parallels.length === 0)
+            return <div>No hay paralelos registrados.</div>
+
+        return this.state.parallels.map( (paralelo, i) => {
+            console.log(paralelo)
+            return <Parallel key={i} paralelo={paralelo} position={i} />
+        }
+        )
 
     }
 
@@ -52,19 +58,19 @@ class CoursesPage extends React.Component{
                 <div className="flex flex-row items-end">
                     <div>
                         <h2 className="my-4 font-bold text-2xl ml-4">
-                            Cursos
+                            Curso {this.props.match.params.id}
                         </h2>
                         <h4 className="ml-6 text-gray-700 text-xl">
-                            Aqui hay un listado de cursos
+                            Aqui hay un listado de los paralelos
                         </h4>
                     </div>
                     <div className="w-64 flex flex-row justify-center">
-                        <Link to="/admin/curso/nuevo" className="text-white bg-blue-500 hover:bg-blue-400 p-2 rounded-full font-semibold">Crear nuevo curso <i className="fas fa-plus-circle mx-2"></i></Link>
+                        <Link to={`/admin/cursos/${this.props.match.params.id}/nuevoParalelo`} className="text-white bg-blue-500 hover:bg-blue-400 p-2 rounded-full font-semibold">Crear nuevo paralelo <i className="fas fa-plus-circle mx-2"></i></Link>
                     </div>
                 </div>
                 <div className="flex flex-row flex-wrap mt-4 ml-6">
                     {
-                        this.mostrarCursos()
+                        this.mostrarParalelos()
                     }
                 </div>
             </div>
@@ -74,4 +80,4 @@ class CoursesPage extends React.Component{
 
 }
 
-export default CoursesPage;
+export default CourseDetails;

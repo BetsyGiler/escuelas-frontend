@@ -13,7 +13,7 @@ const Student = props => {
                 <h2 className="text-center font-bold mb-1 text-wrap px-2">{estudiante.name} {estudiante.last_name}</h2>
                 <h2 className="text-gray-700 text-xs m-0">{estudiante.born.split('T')[0]}</h2>
                 <div className={`m-2 text-${getRandomColor(position)}-500`}>
-                    <i class="fas fa-envelope"></i>
+                    <i className="fas fa-envelope"></i>
                     <h2 className="text-gray-700 text-xs">{estudiante.email}</h2>
                 </div>
                 <h2 className="font-bold">{estudiante.user_name}</h2>
