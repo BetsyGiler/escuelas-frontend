@@ -15,7 +15,10 @@ import CreateStudent from './pages/CreateStudent';
 import CreateParallelPage from './pages/CreateParallePage';
 import ProfessorsPage from './pages/ProfessorsPage';
 import CreateProfessor from './pages/CreateProfessor';
+import AddStudentCourse from './pages/AddStudentCourse';
+import ParalellDetails from './pages/ParallelDetails';
 import Login from './pages/Login';
+import ProfilePage from './pages/ProfilePage';
 
 function App() {
   return (
@@ -32,6 +35,9 @@ function App() {
         <AppRoute exact path="/admin/estudiantes/nuevo" component={CreateStudent} layout={AdminLayout}/>
         <AppRoute exact path="/admin/profesores" component={ProfessorsPage} layout={AdminLayout}/>
         <AppRoute exact path="/admin/profesores/nuevo" component={CreateProfessor} layout={AdminLayout}/>
+        <AppRoute exact path="/admin/paralelo/:id" component={ParalellDetails} layout={AdminLayout}/>
+        <AppRoute exact path="/admin/paralelo/:id/matricular" component={AddStudentCourse} layout={AdminLayout}/> 
+        <AppRoute exact path="/admin/perfil" component={ProfilePage} layout={AdminLayout}/> 
         <Route exact path="/404" component={Page404} />
         <Redirect path="*" to="/404" />
       </Switch>

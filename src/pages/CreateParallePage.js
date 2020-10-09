@@ -77,7 +77,10 @@ class CreateParallelPage extends React.Component{
                     <input className="text-gray-900 p-2 my-2 border-b-2 placeholder-gray-600" type="text" name="periodo" placeholder="Periodo" onChange={this.handleChange} value={this.state.form.periodo} required/>
                     <input className="text-gray-900 p-2 my-2 border-b-2 placeholder-gray-600" type="text" name="letter" placeholder="Letra del paralelo" onChange={this.handleChange} value={this.state.form.letter} required/>
                     <input className="text-gray-900 p-2 my-2 border-b-2 placeholder-gray-600" type="number" min="1" max="10" name="level" placeholder="Nivel del paralelo" onChange={this.handleChange} value={this.state.form.level} required/>
-                    <input className="text-gray-900 p-2 my-2 border-b-2 placeholder-gray-600" type="text" name="professor_id" placeholder="ID del profesor" onChange={this.handleChange} value={this.state.form.professor_id} required/>
+                    <div className="flex flex-row">
+                        <input className="w-3/4 text-gray-900 p-2 my-2 border-b-2 placeholder-gray-600" type="text" name="professor_id" placeholder="ID del profesor" onChange={this.handleChange} value={this.state.form.professor_id} required/>
+                        <a className="flex-1 text-center p-2 m-2 bg-green-500 text-white rounded-lg font-bold box-content" href="/admin/profesores" target="_blank">Ver profesores</a>
+                    </div>
                     <button className="bg-blue-600 text-white font-bold text-xl my-4 p-1 rounded-lg">
                         Registrar
                     </button>

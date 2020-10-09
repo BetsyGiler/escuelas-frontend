@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Parallel = props => {
 
@@ -6,7 +7,7 @@ const Parallel = props => {
     const { position } = props
 
     return (
-        <button className="mx-4 my-3">
+        <Link to={`/admin/paralelo/${paralelo._id}`} className="mx-4 my-3">
             <div className="flex flex-col h-64 w-48 justify-around py-4 items-center bg-white shadow-md hover:bg-gray-200">
                 <h2 className="font-bold text-xl">{paralelo.periodo}</h2>
                 <i className={`fas fa-pencil-ruler font-bold text-xl text-${getRandomColor(position)}-500 bg-${getRandomColor(position)}-200 p-3 mb-2 rounded-lg`}></i>
@@ -14,7 +15,7 @@ const Parallel = props => {
                 <h2 className="font-bold text-gray-600">Nivel {paralelo.level}</h2>
                 <h2 className={`font-semibold text-${getRandomColor(position)}-600`}>Nº de estudiantes: {paralelo.students.length}</h2>
             </div>
-        </button>
+        </Link>
     )
 
 }

@@ -1,11 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Professor from '../components/Professor';
 
-class ProfessorsPage extends React.Component{
+import Student from '../components/Student';
+
+class ParallelDetails extends React.Component{
 
     state = {
-        profesores: [],
+        students: [],
         cargando: false,
         error: ''
     }
@@ -15,7 +16,7 @@ class ProfessorsPage extends React.Component{
         this.setState({ cargando : false, error: '' })
         try{
 
-            const response = await fetch(`${process.env.REACT_APP_BACKEND}/user/professors`,{
+            const response = await fetch(`${process.env.REACT_APP_BACKEND}/user/students`,{
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: localStorage.userToken
@@ -24,8 +25,10 @@ class ProfessorsPage extends React.Component{
 
             const { data } = await response.json();
 
+            // const newData = data.filter(  )
+
             this.setState({
-                profesores: data,
+                students: data,
                 cargando: false
             })
 
@@ -36,43 +39,46 @@ class ProfessorsPage extends React.Component{
 
     }
 
-    mostrarProfesores = () => {
-        
-        if (!this.state.profesores)
-            return <div>No se pueden visualizar la lista de profesores.</div>
+    mostrarEstudiantes = () => {
 
-        if (this.state.profesores.length == 0)
-            return <div>No se pueden visualizar la lista de profesores.</div>
+        if (this.state.students.length === 0)
+            return <div>No hay estudiantes matriculados.</div>
 
-        return this.state.profesores.map( (profesor, i) => (
-            <Professor key={i} profesor={profesor} position={i} />
-        ))
+        return this.state.students.map( (student, i) => {
+            console.log(student)
+            return <Student key={i} estudiante={student} position={i} />
+        }
+        )
+
     }
+
     render(){
+
         return (
             <div className="flex-1 flex flex-col bg-gray-200">
                 <div className="flex flex-row items-end">
                     <div>
                         <h2 className="my-4 font-bold text-2xl ml-4">
-                            Profesores
+                            Paralelo {this.props.match.params.id}
                         </h2>
                         <h4 className="ml-6 text-gray-700 text-xl">
-                            Aqui hay un listado de profesores
+                            Aqui hay un listado de los estudiantes matriculados en este paralelo
                         </h4>
                     </div>
-                    <div className="w-64 ml-4 flex flex-row justify-center">
-                        <Link to="/admin/profesores/nuevo" className="text-white bg-blue-500 hover:bg-blue-400 p-2 rounded-full font-semibold">Registrar nuevo profesor <i className="fas fa-plus-circle mx-2"></i></Link>
+                    <div className="w-64 flex flex-row justify-center">
+                        <Link to={`/admin/paralelo/${this.props.match.params.id}/matricular`} className="text-white bg-blue-500 hover:bg-blue-400 p-2 rounded-full font-semibold">Matricular estudiante <i className="fas fa-plus-circle mx-2"></i></Link>
                     </div>
                 </div>
                 <div className="flex flex-row flex-wrap mt-4 ml-6">
                     {
-                        this.mostrarProfesores()
+                        this.mostrarEstudiantes()
                     }
                 </div>
             </div>
         )
+
     }
 
 }
 
-export default ProfessorsPage;
+export default ParallelDetails;
