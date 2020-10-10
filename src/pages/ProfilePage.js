@@ -36,9 +36,6 @@ class ProfilePage extends React.Component{
                         <span className="font-semibold">Fecha de nacimiento: </span>{usuario.born.split('T')[0]}
                     </h2>
                     <h2>
-                        <span className="font-semibold">Nombre completo: </span>{usuario.name} {usuario.last_name}
-                    </h2>
-                    <h2>
                         <span className="font-semibold">Teléfono: </span>{usuario.cellphone}
                     </h2>
                     <h2>
