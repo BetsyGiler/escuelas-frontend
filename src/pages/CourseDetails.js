@@ -13,7 +13,7 @@ class CourseDetails extends React.Component{
         error: ''
     }
 
-    async componentDidMount (){
+    cargarCursoParalelos = async () => {
 
         this.setState({ cargando : false, error: '' })
         try{
@@ -56,6 +56,12 @@ class CourseDetails extends React.Component{
 
     }
 
+    componentDidMount (){
+
+        this.cargarCursoParalelos()
+
+    }
+
     mostrarNombreCurso = () => {
 
         if (!this.state.curso)
@@ -64,6 +70,7 @@ class CourseDetails extends React.Component{
             return this.state.curso.name;
 
     } 
+
     mostrarParalelos = () => {
 
         if (this.state.parallels.length === 0)
@@ -71,10 +78,41 @@ class CourseDetails extends React.Component{
 
         return this.state.parallels.map( (paralelo, i) => {
             console.log(paralelo)
-            return <Parallel key={i} paralelo={paralelo} position={i} />
+            return <Parallel key={i} paralelo={paralelo} position={i} eliminar={this.eliminarParalelo} />
         }
         )
 
+    }
+
+    eliminarParalelo = async (paralelo) => {
+        //alert(`Se eliminó el paralelo ${paralelo._id}`)
+
+        try{
+            const response = await fetch(`${process.env.REACT_APP_BACKEND}/parallels/${paralelo._id}`,{
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: localStorage.userToken
+                },
+                method: 'DELETE'
+            });
+
+            const { success, message, error } = await response.json();
+
+            if (success){
+                alert('El paralelo ha sido eliminado.')
+                this.cargarCursoParalelos()
+            } else {
+                if(error.message)
+                    alert('No se pudo eliminar el paralelo: '+error.message)
+                else
+                    alert('No se pudo eliminar el paralelo')
+            }
+
+
+        } catch (error){
+            alert('Ocurrió un error')
+            console.log(error)
+        }
     }
 
     render(){

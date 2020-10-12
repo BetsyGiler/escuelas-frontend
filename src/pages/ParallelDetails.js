@@ -6,7 +6,7 @@ import Student from '../components/Student';
 class ParallelDetails extends React.Component{
 
     state = {
-        students: [],
+        paralelo: null,
         cargando: false,
         error: ''
     }
@@ -16,7 +16,7 @@ class ParallelDetails extends React.Component{
         this.setState({ cargando : false, error: '' })
         try{
 
-            const response = await fetch(`${process.env.REACT_APP_BACKEND}/user/students`,{
+            const response = await fetch(`${process.env.REACT_APP_BACKEND}/parallels/${this.props.match.params.id}`,{
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: localStorage.userToken
@@ -25,10 +25,8 @@ class ParallelDetails extends React.Component{
 
             const { data } = await response.json();
 
-            // const newData = data.filter(  )
-
             this.setState({
-                students: data,
+                paralelo: data,
                 cargando: false
             })
 
@@ -39,12 +37,40 @@ class ParallelDetails extends React.Component{
 
     }
 
+    mostrarInfoParalelo = () => {
+
+        const { paralelo } = this.state;
+
+        if (!paralelo)
+            return <div>Cargando...</div>
+
+        return (
+            <div>
+                <h2 className="my-4 font-bold text-2xl ml-4">
+                    Paralelo "{paralelo.letter}"
+                </h2>
+                <h2 className="ml-5 font-semibold text-gray-700 my-1">
+                    Profesor/a: {`${paralelo.professor.name} ${paralelo.professor.last_name}`}
+                </h2>
+                <h2 className="ml-5 font-semibold text-gray-700 my-1">
+                    Nivel: {`${paralelo.level}º`}
+                </h2>
+                <h2 className="ml-5 font-semibold text-gray-700 my-1">
+                    Periodo: {`${paralelo.periodo}`}
+                </h2>
+            </div>
+        )
+    }
+
     mostrarEstudiantes = () => {
 
-        if (this.state.students.length === 0)
+        if(!this.state.paralelo)
+            return <div>Cargando ...</div>
+
+        if (this.state.paralelo.students.length === 0)
             return <div>No hay estudiantes matriculados.</div>
 
-        return this.state.students.map( (student, i) => {
+        return this.state.paralelo.students.map( (student, i) => {
             console.log(student)
             return <Student key={i} estudiante={student} position={i} />
         }
@@ -58,9 +84,9 @@ class ParallelDetails extends React.Component{
             <div className="flex-1 flex flex-col bg-gray-200">
                 <div className="flex flex-row items-end">
                     <div>
-                        <h2 className="my-4 font-bold text-2xl ml-4">
-                            Paralelo {this.props.match.params.id}
-                        </h2>
+                        {
+                            this.mostrarInfoParalelo()
+                        }
                         <h4 className="ml-6 text-gray-700 text-xl">
                             Aqui hay un listado de los estudiantes matriculados en este paralelo
                         </h4>
