@@ -65,7 +65,7 @@ class CreateCourse extends React.Component{
 
             if(data.success){
                 alert('Se ingresó el curso correctamente.')
-                this.props.history.push('/admin/cursos')
+                this.props.history.goBack()
             } else {
                 this.setState({ cargando: false, error: 'No se pudo ingresar el curso.'})
                 alert(this.state.error)

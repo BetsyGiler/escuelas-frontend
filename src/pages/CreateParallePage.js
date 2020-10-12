@@ -51,7 +51,7 @@ class CreateParallelPage extends React.Component{
 
             if(data.success){
                 alert('Se ingresó el paralelo correctamente.')
-                this.props.history.push(`/admin/cursos/${this.props.match.params.id}`)
+                this.props.history.goBack()
             } else {
                 this.setState({ cargando: false, error: 'No se pudo ingresar el curso.'})
                 alert(this.state.error)

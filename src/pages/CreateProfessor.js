@@ -51,7 +51,7 @@ class CreateProfessor extends React.Component{
 
             if(data.success){
                 alert('Se ingresó el profesor correctamente.')
-                this.props.history.push('/admin/profesores')
+                this.props.history.goBack()
             } else {
                 this.setState({ cargando: false, error: 'No se pudo ingresar el profesor.'})
                 alert(this.state.error)

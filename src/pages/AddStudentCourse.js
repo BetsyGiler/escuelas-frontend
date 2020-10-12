@@ -46,7 +46,7 @@ class AddStudentCourse extends React.Component{
 
             if(data.success){
                 alert('Se matriculó el estudiante correctamente.')
-                this.props.history.push('/admin/estudiantes')
+                this.props.history.goBack()
             } else {
                 this.setState({ cargando: false, error: 'No se pudo matricular el estudiante.'})
                 alert(this.state.error)
