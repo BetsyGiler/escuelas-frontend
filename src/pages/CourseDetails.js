@@ -7,6 +7,7 @@ import Parallel from '../components/Parallel';
 class CourseDetails extends React.Component{
 
     state = {
+        curso: null,
         parallels: [],
         cargando: false,
         error: ''
@@ -17,6 +18,23 @@ class CourseDetails extends React.Component{
         this.setState({ cargando : false, error: '' })
         try{
 
+
+            //Pedimos los datos del curso
+            const responseCourse = await fetch(`${process.env.REACT_APP_BACKEND}/courses/${this.props.match.params.id}`,{
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: localStorage.userToken
+                }
+            });
+
+            const courseData = await responseCourse.json();
+
+            this.setState({
+                curso: courseData.data,
+                cargando: false
+            })
+
+            //Pedimos los paralelos del curso
             const response = await fetch(`${process.env.REACT_APP_BACKEND}/courses/${this.props.match.params.id}/parallels`,{
                 headers: {
                     "Content-Type": "application/json",
@@ -38,6 +56,14 @@ class CourseDetails extends React.Component{
 
     }
 
+    mostrarNombreCurso = () => {
+
+        if (!this.state.curso)
+            return 'Cargando...';
+        else
+            return this.state.curso.name;
+
+    } 
     mostrarParalelos = () => {
 
         if (this.state.parallels.length === 0)
@@ -58,7 +84,7 @@ class CourseDetails extends React.Component{
                 <div className="flex flex-row items-end">
                     <div>
                         <h2 className="my-4 font-bold text-2xl ml-4">
-                            Curso {this.props.match.params.id}
+                            Curso de {this.mostrarNombreCurso()}
                         </h2>
                         <h4 className="ml-6 text-gray-700 text-xl">
                             Aqui hay un listado de los paralelos

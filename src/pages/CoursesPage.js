@@ -11,8 +11,13 @@ class CoursesPage extends React.Component{
         error: ''
     }
 
-    async componentDidMount (){
+    componentDidMount (){
 
+        this.cargarCursos()
+
+    }
+
+    cargarCursos = async () => {
         this.setState({ cargando : false, error: '' })
         try{
 
@@ -34,13 +39,12 @@ class CoursesPage extends React.Component{
             this.setState({ cargando : false, error: error.message })
             console.log(error)
         }
-
     }
 
     mostrarCursos = () => {
 
         return this.state.cursos.map( (curso, i) => (
-            <Course key={i} curso={curso} position={i} />
+            <Course key={i} curso={curso} position={i} recargar={this.cargarCursos} />
         ))
 
     }
