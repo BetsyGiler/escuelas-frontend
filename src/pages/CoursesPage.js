@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import Course from '../components/Course';
+import Loader from '../components/Loader';
 
 class CoursesPage extends React.Component{
 
@@ -18,7 +19,7 @@ class CoursesPage extends React.Component{
     }
 
     cargarCursos = async () => {
-        this.setState({ cargando : false, error: '' })
+        this.setState({ cargando : true, error: '' })
         try{
 
             const response = await fetch(`${process.env.REACT_APP_BACKEND}/courses`,{
@@ -53,6 +54,11 @@ class CoursesPage extends React.Component{
 
         return (
             <div className="flex-1 flex flex-col bg-gray-200">
+                {
+                    (this.state.cargando) && (
+                        <Loader />
+                    )
+                }
                 <div className="flex flex-row items-end">
                     <div>
                         <h2 className="my-4 font-bold text-2xl ml-4">

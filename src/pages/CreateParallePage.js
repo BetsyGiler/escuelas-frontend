@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Loader from '../components/Loader';
+
 class CreateParallelPage extends React.Component{
 
     state = {
@@ -35,9 +37,6 @@ class CreateParallelPage extends React.Component{
                 cargando: true
             })
 
-            console.log('formulario', this.state.form)
-            console.log(`${process.env.REACT_APP_BACKEND}/courses/${this.props.match.params.id}/parallels`)
-
             const response = await fetch(`${process.env.REACT_APP_BACKEND}/courses/${this.props.match.params.id}/parallels`, {
                 headers: {
                     "Content-Type": "application/json",
@@ -71,6 +70,11 @@ class CreateParallelPage extends React.Component{
         
         return (
             <div className="flex-1 flex flex-col justify-center items-center">
+                {
+                    (this.state.cargando) && (
+                        <Loader />
+                    )
+                }
                 <form onSubmit={this.handleSubmit} autoComplete="off" className="flex flex-col bg-white p-4 pb-2 w-1/2 text-gray-800">
                     <h2 className="font-bold text-2xl my-3">Crear paralelo</h2>
                     <h3 className="px-2">Agrega un nuevo paralelo</h3>

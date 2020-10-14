@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Loader from '../components/Loader';
+
 class CreateCourse extends React.Component{
 
     state = {
@@ -19,24 +21,6 @@ class CreateCourse extends React.Component{
             }
         })
     }
-
-    /*handleParallels = (e) => {
-
-        const A_VALUE = 65;
-
-        let paralelos = [];
-
-        for(let i=A_VALUE; i < A_VALUE + parseInt(e.target.value) ; i++){
-            paralelos.push({'paralelo': String.fromCharCode(i)})
-        }
-
-        this.setState({
-            form: {
-                ...this.state.form,
-                parallels : paralelos
-            }
-        })
-    }*/
 
     handleSubmit = async e => {
 
@@ -85,6 +69,11 @@ class CreateCourse extends React.Component{
         
         return (
             <div className="flex-1 flex flex-col justify-center items-center">
+                {
+                    (this.state.cargando) && (
+                        <Loader />
+                    )
+                }
                 <form onSubmit={this.handleSubmit} autoComplete="off" className="flex flex-col bg-white p-4 pb-2 w-1/2 text-gray-800">
                     <h2 className="font-bold text-2xl my-3">Crear curso</h2>
                     <h3 className="px-2">Agrega un nuevo curso</h3>

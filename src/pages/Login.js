@@ -1,6 +1,8 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 
+import Loader from '../components/Loader';
+
 class Login extends React.Component {
 
     state = {
@@ -60,7 +62,8 @@ class Login extends React.Component {
         } catch(error){
             console.log(error)
             this.setState({
-                error: error.message
+                error: error.message,
+                cargando: false
             })
         }
     }
@@ -73,13 +76,18 @@ class Login extends React.Component {
 
         return (
             <div className="flex flex-1 bg-gray-200">
+                {
+                    (this.state.cargando) && (
+                        <Loader />
+                    )
+                }
                 <div className="container mx-auto flex flex-col items-center flex-1">
                     <div className="flex flex-row bg-red-300 mt-40 w-1/2 shadow-xl">
                         <form onSubmit={this.handleSubmit} autoComplete="off" className="flex flex-col bg-white p-4 pb-2 w-1/2 text-gray-800">
                             <h2 className="font-bold text-2xl my-3">Login</h2>
                             <h3 className="px-2">Inicia sesión en tu cuenta</h3>
-                            <input className="text-gray-900 p-2 my-2 border-b-2 placeholder-gray-600" type="text" name="email" placeholder="Email" onChange={this.handleChange} value={this.state.form.email}/>
-                            <input className="text-gray-900 p-2 my-2 border-b-2 placeholder-gray-600" type="password" name="password" placeholder="Contraseña" onChange={this.handleChange} value={this.state.form.password}/>
+                            <input className="text-gray-900 p-2 my-2 border-b-2 placeholder-gray-600" type="text" name="email" placeholder="Email" onChange={this.handleChange} value={this.state.form.email} required/>
+                            <input className="text-gray-900 p-2 my-2 border-b-2 placeholder-gray-600" type="password" name="password" placeholder="Contraseña" onChange={this.handleChange} value={this.state.form.password} required/>
                             <button className="bg-blue-600 text-white font-bold text-xl my-4 p-1 rounded-lg">
                                 Iniciar sesión
                             </button>

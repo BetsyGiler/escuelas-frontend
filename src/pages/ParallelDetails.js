@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import Student from '../components/Student';
+import Loader from '../components/Loader';
 
 class ParallelDetails extends React.Component{
 
@@ -13,7 +14,7 @@ class ParallelDetails extends React.Component{
 
     async componentDidMount (){
 
-        this.setState({ cargando : false, error: '' })
+        this.setState({ cargando : true, error: '' })
         try{
 
             const response = await fetch(`${process.env.REACT_APP_BACKEND}/parallels/${this.props.match.params.id}`,{
@@ -82,6 +83,11 @@ class ParallelDetails extends React.Component{
 
         return (
             <div className="flex-1 flex flex-col bg-gray-200">
+                {
+                    (this.state.cargando) && (
+                        <Loader />
+                    )
+                }
                 <div className="flex flex-row items-end">
                     <div>
                         {

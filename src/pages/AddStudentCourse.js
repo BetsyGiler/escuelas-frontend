@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Loader from '../components/Loader';
+
 class AddStudentCourse extends React.Component{
 
     state = {
@@ -66,6 +68,11 @@ class AddStudentCourse extends React.Component{
         
         return (
             <div className="flex-1 flex flex-col justify-center items-center">
+                {
+                    (this.state.cargando) && (
+                        <Loader />
+                    )
+                }
                 <form onSubmit={this.handleSubmit} autoComplete="off" className="flex flex-col bg-white p-4 pb-2 w-1/2 text-gray-800">
                     <h2 className="font-bold text-2xl my-3">Matricular estudiante en el paralelo</h2>
                     <h3 className="px-2">Matricular estudiante</h3>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import Course from '../components/Course';
+import Loader from '../components/Loader';
 import Parallel from '../components/Parallel';
 
 class CourseDetails extends React.Component{
@@ -15,7 +15,7 @@ class CourseDetails extends React.Component{
 
     cargarCursoParalelos = async () => {
 
-        this.setState({ cargando : false, error: '' })
+        this.setState({ cargando : true, error: '' })
         try{
 
 
@@ -119,6 +119,11 @@ class CourseDetails extends React.Component{
 
         return (
             <div className="flex-1 flex flex-col bg-gray-200">
+                {
+                    (this.state.cargando) && (
+                        <Loader />
+                    )
+                }
                 <div className="flex flex-row items-end">
                     <div>
                         <h2 className="my-4 font-bold text-2xl ml-4">
