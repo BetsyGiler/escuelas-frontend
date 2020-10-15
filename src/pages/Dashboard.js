@@ -1,5 +1,6 @@
 import React from 'react';
 import Footer from '../components/Footer';
+import Pregunta from '../components/Pregunta';
 
 class Dashboard extends React.Component{
 

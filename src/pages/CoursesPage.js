@@ -42,10 +42,39 @@ class CoursesPage extends React.Component{
         }
     }
 
+    eliminarCurso = async(curse_id) => {
+        try{
+            const response = await fetch(`${process.env.REACT_APP_BACKEND}/courses/${curse_id}`,{
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: localStorage.userToken
+                },
+                method: 'DELETE'
+            });
+
+            const { success, message, error } = await response.json();
+
+            if (success){
+                alert(message)
+                this.cargarCursos()
+            } else {
+                if(error.message)
+                    alert('No se pudo eliminar el curso: '+error.message)
+                else
+                    alert('No se pudo eliminar el curso')
+            }
+
+
+        } catch (error){
+            alert('Ocurrió un error')
+            console.log(error)
+        }
+    }
+
     mostrarCursos = () => {
 
         return this.state.cursos.map( (curso, i) => (
-            <Course key={i} curso={curso} position={i} recargar={this.cargarCursos} />
+            <Course key={i} curso={curso} position={i} eliminar={this.eliminarCurso} />
         ))
 
     }

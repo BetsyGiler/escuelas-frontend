@@ -1,20 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+
+import Pregunta from './Pregunta';
 
 const Parallel = props => {
 
-    const { paralelo } = props
-    const { position } = props
+    const [pregunta, setPregunta] = useState(false);
 
-    const eliminar = () => {
-        props.eliminar(paralelo)
+    const { paralelo, position } = props
+
+    const preguntar = () => {
+        setPregunta(true)
+    }
+
+    const eliminar = (condicion) => {
+
+        if(condicion){
+            props.eliminar(paralelo)
+        }
+
+        setPregunta(false)
+
     }
 
     return (
         <div className="relative mx-4 my-3">
             {
+                (pregunta) &&
+                <Pregunta mensaje={'Está seguro de borrar el paralelo?'} accionSi={() => eliminar(true)} accionNo={() => eliminar(false)}/>
+            }
+            {
                 (JSON.parse(localStorage.userInfo).role === 'ADMIN') &&
-                <i onClick={eliminar} className="fas fa-times absolute top-0 right-0 m-2 text-gray-400 hover:text-red-600 cursor-pointer"></i>
+                <i onClick={preguntar} className="fas fa-times absolute top-0 right-0 m-2 text-gray-400 hover:text-red-600 cursor-pointer"></i>
             }
             <Link to={`/admin/paralelo/${paralelo._id}`}>
                 <div className="flex flex-col h-64 w-48 justify-around py-4 items-center bg-white shadow-md hover:bg-gray-200">

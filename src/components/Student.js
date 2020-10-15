@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
+
+import Pregunta from './Pregunta';
 
 const Student = props => {
+
+    const [pregunta, setPregunta] = useState(false);
 
     const estudiante = props.estudiante;
     const position = props.position
@@ -18,15 +22,29 @@ const Student = props => {
 
     }
 
-    const eliminarEstudiante = () => {
-        props.eliminar(estudiante._id)
+    const preguntar = () => {
+        setPregunta(true)
+    }
+
+    const eliminarEstudiante = (condicion) => {
+
+        if(condicion){
+            props.eliminar(estudiante._id)
+        }
+
+        setPregunta(false)
+
     }
 
     return (
         <div className="relative mx-4 my-3">
             {
+                (pregunta) &&
+                <Pregunta mensaje={'Está seguro de borrar al estudiante?'} accionSi={() => eliminarEstudiante(true)} accionNo={() => eliminarEstudiante(false)}/>
+            }
+            {
                 (JSON.parse(localStorage.userInfo).role === 'ADMIN') &&
-                <i onClick={eliminarEstudiante} className="fas fa-times absolute top-0 right-0 m-2 text-gray-400 hover:text-red-600 cursor-pointer"></i>
+                <i onClick={preguntar} className="fas fa-times absolute top-0 right-0 m-2 text-gray-400 hover:text-red-600 cursor-pointer"></i>
             }
             <button onClick={copiarId} className="flex flex-col h-64 w-48 justify-center items-center bg-white shadow-md">
                 <i className={`fas fa-user-graduate text-2xl text-${getRandomColor(position)}-500 bg-${getRandomColor(position)}-200 p-3 mb-2 rounded-lg`}></i>
