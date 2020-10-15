@@ -12,7 +12,7 @@ class ParallelDetails extends React.Component{
         error: ''
     }
 
-    async componentDidMount (){
+    cargarParalelo = async () => {
 
         this.setState({ cargando : true, error: '' })
         try{
@@ -35,6 +35,43 @@ class ParallelDetails extends React.Component{
             this.setState({ cargando : false, error: error.message })
             console.log(error)
         }
+
+    }
+
+    eliminarEstudiante = async (student_id) => {
+
+        try{
+            const response = await fetch(`${process.env.REACT_APP_BACKEND}/parallels/${this.props.match.params.id}/student?student_id=${student_id}`,{
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: localStorage.userToken
+                },
+                method: 'DELETE'
+            });
+
+            const { success, message, error } = await response.json();
+
+            if (success){
+                alert('El estudiante ha sido eliminado.')
+                this.cargarParalelo()
+            } else {
+                if(error.message)
+                    alert('No se pudo eliminar el estudiante: '+error.message)
+                else
+                    alert('No se pudo eliminar el estudiante')
+            }
+
+
+        } catch (error){
+            alert('Ocurrió un error')
+            console.log(error)
+        }
+
+    }
+
+    componentDidMount (){
+
+        this.cargarParalelo()
 
     }
 
@@ -73,7 +110,7 @@ class ParallelDetails extends React.Component{
 
         return this.state.paralelo.students.map( (student, i) => {
             console.log(student)
-            return <Student key={i} estudiante={student} position={i} />
+            return <Student key={i} estudiante={student} position={i} eliminar={this.eliminarEstudiante}/>
         }
         )
 

@@ -86,7 +86,7 @@ class CreateProfessor extends React.Component{
 
             if(this.props.match.params.id){
                 metodo = 'PUT';
-                idUser = `/${this.props.match.params.id}`;
+                idUser = `/update/${this.props.match.params.id}`;
                 mensaje = 'modificó'
             } else {
                 metodo = 'POST';

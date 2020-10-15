@@ -5,7 +5,7 @@ const Student = props => {
     const estudiante = props.estudiante;
     const position = props.position
 
-    const copiarId = () => {
+    const copiarId = (props) => {
 
         const elem = document.createElement('textarea');
         elem.value = estudiante._id;
@@ -18,9 +18,14 @@ const Student = props => {
 
     }
 
+    const eliminarEstudiante = () => {
+        props.eliminar(estudiante._id)
+    }
+
     return (
-        <button onClick={copiarId} className="mx-4 my-3">
-            <div className="flex flex-col h-64 w-48 justify-center items-center bg-white shadow-md">
+        <div className="relative mx-4 my-3">
+            <i onClick={eliminarEstudiante} className="fas fa-times absolute top-0 right-0 m-2 text-gray-400 hover:text-red-600 cursor-pointer"></i>
+            <button onClick={copiarId} className="flex flex-col h-64 w-48 justify-center items-center bg-white shadow-md">
                 <i className={`fas fa-user-graduate text-2xl text-${getRandomColor(position)}-500 bg-${getRandomColor(position)}-200 p-3 mb-2 rounded-lg`}></i>
                 <h2 className="text-center font-bold mb-1 text-wrap px-2">{estudiante.name} {estudiante.last_name}</h2>
                 {
@@ -40,8 +45,8 @@ const Student = props => {
                         <h2 className="font-bold">{estudiante.user_name}</h2>
                     )
                 }
-            </div>
-        </button>
+            </button>
+        </div>
     );
 
 }
