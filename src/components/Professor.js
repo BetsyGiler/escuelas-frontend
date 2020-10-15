@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Professor = props => {
 
@@ -19,8 +20,11 @@ const Professor = props => {
     }
 
     return (
-        <button onClick={copiarId} className="mx-4 my-3">
-            <div className="flex flex-col h-64 w-48 justify-center items-center bg-white shadow-md hover:bg-gray-200">
+        <div className="relative mx-4 my-3">
+            <Link to={`/admin/profesores/${profesor._id}/modificar`} className="absolute top-0 left-0 m-2 text-gray-400 hover:text-green-600">
+                <i className="fas fa-pencil-alt"></i>
+            </Link>
+            <button onClick={copiarId} className="flex flex-col h-64 w-48 justify-center items-center bg-white shadow-md hover:bg-gray-200">
                 <i className={`fas fa-chalkboard-teacher text-2xl text-${getRandomColor(position)}-500 bg-${getRandomColor(position)}-200 p-3 mb-2 rounded-lg`}></i>
                 <h2 className="text-center font-bold mb-1 text-wrap px-2">{profesor.name} {profesor.last_name}</h2>
                 <h2 className="text-gray-700 text-xs m-0">{profesor.born.split('T')[0]}</h2>
@@ -29,8 +33,8 @@ const Professor = props => {
                     <h2 className="text-gray-700 text-xs">{profesor.email}</h2>
                 </div>
                 <h2 className="font-bold">{profesor.user_name}</h2>
-            </div>
-        </button>
+            </button>
+        </div>
     );
 
 }

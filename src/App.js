@@ -30,11 +30,13 @@ function App() {
         <AppRoute exact path="/admin/cursos" component={CoursesPage} layout={AdminLayout}/>
         <AppRoute exact path="/admin/curso/nuevo" component={CreateCourse} layout={AdminLayout}/>
         <AppRoute exact path="/admin/cursos/:id" component={CourseDetailsPage} layout={AdminLayout}/>
+        <AppRoute exact path="/admin/curso/:id/modificar" component={CreateCourse} layout={AdminLayout}/>
         <AppRoute exact path="/admin/cursos/:id/nuevoParalelo" component={CreateParallelPage} layout={AdminLayout}/>
         <AppRoute exact path="/admin/estudiantes" component={StudentsPage} layout={AdminLayout}/>
         <AppRoute exact path="/admin/estudiantes/nuevo" component={CreateStudent} layout={AdminLayout}/>
         <AppRoute exact path="/admin/profesores" component={ProfessorsPage} layout={AdminLayout}/>
         <AppRoute exact path="/admin/profesores/nuevo" component={CreateProfessor} layout={AdminLayout}/>
+        <AppRoute exact path="/admin/profesores/:id/modificar" component={CreateProfessor} layout={AdminLayout}/>
         <AppRoute exact path="/admin/paralelo/:id" component={ParalellDetails} layout={AdminLayout}/>
         <AppRoute exact path="/admin/paralelo/:id/matricular" component={AddStudentCourse} layout={AdminLayout}/> 
         <AppRoute exact path="/admin/perfil" component={ProfilePage} layout={AdminLayout}/> 

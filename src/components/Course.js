@@ -40,6 +40,9 @@ const Course = props => {
 
     return (
         <div className="relative mx-4 my-3">
+            <Link to={`/admin/curso/${curso._id}/modificar`} className="absolute top-0 left-0 m-2 text-gray-400 hover:text-green-600">
+                <i className="fas fa-pencil-alt"></i>
+            </Link>
             <i onClick={eliminarCurso} className="fas fa-times absolute top-0 right-0 m-2 text-gray-400 hover:text-red-600 cursor-pointer"></i>
             <Link to={`/admin/cursos/${curso._id}`}>
                 <div className="flex flex-col h-64 w-48 justify-center items-center bg-white shadow-md">

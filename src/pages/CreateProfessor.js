@@ -30,6 +30,48 @@ class CreateProfessor extends React.Component{
 
     }
 
+    componentDidMount(){
+        this.cargarProfesor()
+    }
+
+    cargarProfesor = async () => {
+
+        this.setState({ cargando : true, error: '' })
+
+        try{
+
+            const response = await fetch(`${process.env.REACT_APP_BACKEND}/user/data/${this.props.match.params.id}`,{
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: localStorage.userToken
+                }
+            });
+
+            const { data } = await response.json();
+
+            const { name, last_name, born, identification, user_name, email, cellphone } = data;
+
+            this.setState({
+                form: {
+                    ...this.state.form,
+                    name,
+                    last_name,
+                    born: born.split('T')[0],
+                    identification,
+                    user_name,
+                    email,
+                    cellphone
+                },
+                cargando: false
+            })
+
+        } catch (error){
+            this.setState({ cargando : false, error: error.message })
+            console.log(error)
+        }
+
+    }
+
     handleSubmit = async e => {
 
         e.preventDefault()
@@ -40,22 +82,34 @@ class CreateProfessor extends React.Component{
                 cargando: true
             })
 
-            const response = await fetch(`${process.env.REACT_APP_BACKEND}/user/signup`, {
+            let metodo, idUser, mensaje;
+
+            if(this.props.match.params.id){
+                metodo = 'PUT';
+                idUser = `/${this.props.match.params.id}`;
+                mensaje = 'modificó'
+            } else {
+                metodo = 'POST';
+                idUser = '/signup';
+                mensaje = 'ingresó'
+            }
+
+            const response = await fetch(`${process.env.REACT_APP_BACKEND}/user${idUser}`, {
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: localStorage.userToken
                 },
-                method: 'POST',
+                method: metodo,
                 body: JSON.stringify(this.state.form),
             })
 
             const data = await response.json();
 
             if(data.success){
-                alert('Se ingresó el profesor correctamente.')
+                alert(`Se ${mensaje} el profesor correctamente.`)
                 this.props.history.goBack()
             } else {
-                this.setState({ cargando: false, error: 'No se pudo ingresar el profesor.'})
+                this.setState({ cargando: false, error: `No se pudo procesar la solicitud.`})
                 alert(this.state.error)
             }
 

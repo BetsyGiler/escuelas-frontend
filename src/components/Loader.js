@@ -12,7 +12,7 @@ const Loader = props => {
                 color="#27a3cc99"
                 height={50}
                 width={50}
-                timeout={3000} //3 secs
+                timeout={10000} //3 secs
             />
         </div>
     );

@@ -62,7 +62,10 @@ class StudentsPage extends React.Component{
                         </h4>
                     </div>
                     <div className="w-64 ml-4 flex flex-row justify-center">
-                        <Link to="/admin/estudiantes/nuevo" className="text-white bg-blue-500 hover:bg-blue-400 p-2 rounded-full font-semibold">Registrar nuevo estudiante <i className="fas fa-plus-circle mx-2"></i></Link>
+                        {
+                            (JSON.parse(localStorage.userInfo).role === 'ADMIN') &&
+                            <Link to="/admin/estudiantes/nuevo" className="text-white bg-blue-500 hover:bg-blue-400 p-2 rounded-full font-semibold">Registrar nuevo estudiante <i className="fas fa-plus-circle mx-2"></i></Link>
+                        }
                     </div>
                 </div>
                 <div className="flex flex-row flex-wrap mt-4 ml-6">
