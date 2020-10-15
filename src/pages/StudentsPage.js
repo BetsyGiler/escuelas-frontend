@@ -12,7 +12,7 @@ class StudentsPage extends React.Component{
         error: ''
     }
 
-    async componentDidMount (){
+    cargarEstudiantes = async () => {
 
         this.setState({ cargando : true, error: '' })
         try{
@@ -38,10 +38,47 @@ class StudentsPage extends React.Component{
 
     }
 
+    eliminarEstudiante = async (student_id) => {
+
+        try{
+            const response = await fetch(`${process.env.REACT_APP_BACKEND}/user/delete/${student_id}`,{
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: localStorage.userToken
+                },
+                method: 'DELETE'
+            });
+
+            const { success, message, error } = await response.json();
+
+            if (success){
+                alert('El estudiante ha sido eliminado.')
+                this.cargarEstudiantes()
+            } else {
+                if(error.message)
+                    alert('No se pudo eliminar el estudiante: '+error.message)
+                else
+                    alert('No se pudo eliminar el estudiante')
+            }
+
+
+        } catch (error){
+            alert('Ocurrió un error')
+            console.log(error)
+        }
+
+    }
+
+    componentDidMount (){
+
+        this.cargarEstudiantes()    
+
+    }
+
     mostrarEstudiantes = () => {
         
         return this.state.estudiantes.map( (estudiante, i) => (
-            <Student key={i} estudiante={estudiante} position={i} />
+            <Student key={i} estudiante={estudiante} position={i} eliminar={this.eliminarEstudiante}/>
         ))
     }
     render(){

@@ -12,7 +12,7 @@ class ProfessorsPage extends React.Component{
         error: ''
     }
 
-    async componentDidMount (){
+    cargarProfesores = async () => {
 
         this.setState({ cargando : true, error: '' })
         try{
@@ -38,6 +38,41 @@ class ProfessorsPage extends React.Component{
 
     }
 
+    eliminarProfesor = async (professor_id) => {
+
+        try{
+            const response = await fetch(`${process.env.REACT_APP_BACKEND}/user/delete/${professor_id}`,{
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: localStorage.userToken
+                },
+                method: 'DELETE'
+            });
+
+            const { success, message, error } = await response.json();
+
+            if (success){
+                alert('El profesor ha sido eliminado.')
+                this.cargarProfesores()
+            } else {
+                if(error.message)
+                    alert('No se pudo eliminar el profesor: '+error.message)
+                else
+                    alert('No se pudo eliminar el profesor')
+            }
+
+
+        } catch (error){
+            alert('Ocurrió un error')
+            console.log(error)
+        }
+
+    }
+
+    componentDidMount (){
+        this.cargarProfesores()        
+    }
+
     mostrarProfesores = () => {
         
         if (!this.state.profesores)
@@ -47,7 +82,7 @@ class ProfessorsPage extends React.Component{
             return <div>No se pueden visualizar la lista de profesores.</div>
 
         return this.state.profesores.map( (profesor, i) => (
-            <Professor key={i} profesor={profesor} position={i} />
+            <Professor key={i} profesor={profesor} position={i} eliminar={this.eliminarProfesor}/>
         ))
     }
     render(){

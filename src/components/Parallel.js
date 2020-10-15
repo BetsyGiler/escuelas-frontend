@@ -12,7 +12,10 @@ const Parallel = props => {
 
     return (
         <div className="relative mx-4 my-3">
-            <i onClick={eliminar} className="fas fa-times absolute top-0 right-0 m-2 text-gray-400 hover:text-red-600 cursor-pointer"></i>
+            {
+                (JSON.parse(localStorage.userInfo).role === 'ADMIN') &&
+                <i onClick={eliminar} className="fas fa-times absolute top-0 right-0 m-2 text-gray-400 hover:text-red-600 cursor-pointer"></i>
+            }
             <Link to={`/admin/paralelo/${paralelo._id}`}>
                 <div className="flex flex-col h-64 w-48 justify-around py-4 items-center bg-white shadow-md hover:bg-gray-200">
                     <h2 className="font-bold text-xl">{paralelo.periodo}</h2>

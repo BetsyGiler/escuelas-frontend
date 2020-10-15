@@ -19,11 +19,16 @@ const Professor = props => {
 
     }
 
+    const eliminarProfesor = () => {
+        props.eliminar(profesor._id)
+    }
+
     return (
         <div className="relative mx-4 my-3">
             <Link to={`/admin/profesores/${profesor._id}/modificar`} className="absolute top-0 left-0 m-2 text-gray-400 hover:text-green-600">
                 <i className="fas fa-pencil-alt"></i>
             </Link>
+            <i onClick={eliminarProfesor} className="fas fa-times absolute top-0 right-0 m-2 text-gray-400 hover:text-red-600 cursor-pointer"></i>
             <button onClick={copiarId} className="flex flex-col h-64 w-48 justify-center items-center bg-white shadow-md hover:bg-gray-200">
                 <i className={`fas fa-chalkboard-teacher text-2xl text-${getRandomColor(position)}-500 bg-${getRandomColor(position)}-200 p-3 mb-2 rounded-lg`}></i>
                 <h2 className="text-center font-bold mb-1 text-wrap px-2">{profesor.name} {profesor.last_name}</h2>
